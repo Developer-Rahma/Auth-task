@@ -81,6 +81,33 @@ Vite environment variables prefixed with `VITE_` are bundled into browser
 code. They must never contain credentials, signing keys, database connection
 strings, or other secrets. The frontend needs only a public API base URL.
 
+## CI/CD
+
+The [frontend workflow](../.github/workflows/frontend.yml) runs lint, tests,
+and a production build on pull requests targeting `main`. A push to `main`
+that changes frontend files runs the same checks and deploys the static site to
+GitHub Pages.
+
+To enable deployment:
+
+1. In repository **Settings → Pages**, select **GitHub Actions** as the build
+   and deployment source.
+2. Add the repository Actions variable `VITE_API_URL` with the deployed
+   backend API origin (for example, `https://api.example.com`). This is public
+   configuration, not a secret. The workflow rejects production deployment
+   if the variable is missing or still points to localhost.
+3. Configure the backend `CORS_ORIGIN` to the frontend origin (for a project
+   site, `https://<owner>.github.io`) and keep credentialed CORS enabled.
+   Because GitHub Pages and most API hosts are cross-site, production auth
+   cookies also need `COOKIE_SAME_SITE=none` and `COOKIE_SECURE=true`.
+   Browsers that block third-party cookies may still prevent cookie-based
+   authentication; a frontend and API on the same site (or a same-site custom
+   domain) avoids that deployment limitation.
+
+The workflow builds for the repository's GitHub Pages subpath, configures
+React Router to use that path, and copies the app entry point to `404.html` so
+direct navigation and refreshes on client-side routes continue to work.
+
 ## Application routes
 
 | Route | Purpose |

@@ -22,6 +22,7 @@ errors, logging, and tests. The complete active endpoint reference is in
 - [Security and cookie session design](#security-and-cookie-session-design)
 - [Errors, request IDs, and logging](#errors-request-ids-and-logging)
 - [Tests and checks](#tests-and-checks)
+- [GitHub Actions CI/CD](#github-actions-cicd)
 - [Operational notes and current boundaries](#operational-notes-and-current-boundaries)
 
 ## Technology
@@ -361,6 +362,32 @@ npm run test:cov
 npm run build
 npm run lint
 ```
+
+## GitHub Actions CI/CD
+
+The repository workflow at
+[`.github/workflows/backend.yml`](../.github/workflows/backend.yml) runs when
+files under `backend/` change in a pull request or a push to `main`. It installs
+dependencies from the API lockfile, runs the unit and authentication e2e
+Jest suites, and builds the production application. E2E tests use the
+workflow's isolated MongoDB 7 service and the `auth_api_test` database.
+
+After CI passes on a push to `main`, a separate job triggers deployment to
+Render. Configure the Render Web Service with:
+
+- **Root Directory:** `backend/api`
+- **Build Command:** `npm ci && npm run build`
+- **Start Command:** `npm run start:prod`
+
+Set required runtime variables (MongoDB URI, independent JWT secrets,
+`CORS_ORIGIN`, and production cookie settings) in the Render service's
+environment configuration. Use the deployment's MongoDB database, never the
+CI test database.
+
+Create a Render deploy hook for the service and add its URL to the GitHub
+repository's Actions secrets as `RENDER_DEPLOY_HOOK_URL`. Pull requests run CI
+only; the deploy job runs only for pushes to `main`. If the secret is missing,
+the deploy job fails with an explicit setup error.
 
 ## Operational notes and current boundaries
 

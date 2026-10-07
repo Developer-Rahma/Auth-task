@@ -1,6 +1,5 @@
 import {
   ArrowUpRight,
-  Bell,
   ChevronRight,
   CircleHelp,
   LayoutDashboard,

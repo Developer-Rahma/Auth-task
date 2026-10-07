@@ -7,7 +7,7 @@ import { LandingPage } from '../../features/marketing/pages/LandingPage'
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<LandingPage />} path="/" />
         <Route element={<SignUpPage />} path="/signup" />
