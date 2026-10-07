@@ -6,6 +6,7 @@ architecture, styling, API integration, authentication, and tests, is in the
 
 This directory (`web/`) contains the Vite React application.
 
+
 ## Quick start
 
 ```powershell
