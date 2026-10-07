@@ -94,7 +94,7 @@ describe('Authentication API (e2e)', () => {
     app.setGlobalPrefix('api');
     app.use(helmet());
     app.enableCors({
-      origin: config.getOrThrow<string>('app.corsOrigin'),
+      origin: config.getOrThrow<string[]>('app.corsOrigins'),
       credentials: true,
     });
     app.use(cookieParser());

@@ -103,6 +103,13 @@ Development defaults use `http://localhost:5173` for `CORS_ORIGIN` and
 `VITE_API_URL` to the backend origin. The origin must match exactly for
 credentialed browser CORS.
 
+For the Fly.io deployment, `backend/api/fly.toml` sets the non-secret
+production values, including the required `CORS_ORIGIN`. Set `MONGODB_URI`,
+`JWT_ACCESS_SECRET`, and `JWT_REFRESH_SECRET` as Fly secrets for the app named
+in that file; do not put those values in `fly.toml`. Confirm the secrets are
+present with `fly secrets list --app rahma-auth-api-2026`, then deploy from
+`backend/api` with `fly deploy`.
+
 Although `THROTTLE_TTL` and `THROTTLE_LIMIT` are validated and loaded into
 configuration, the current global throttler registration in `AppModule` uses
 hard-coded values of 60,000 ms and 100 requests. Changing those environment

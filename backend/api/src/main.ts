@@ -24,12 +24,14 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.use(helmet());
   app.enableCors({
-    origin: configService.getOrThrow<string>('app.corsOrigin'),
+    origin: configService.getOrThrow<string[]>('app.corsOrigins'),
     credentials: true,
   });
   app.use(cookieParser());
   app.useGlobalFilters(new GlobalExceptionFilter(logger));
-  await app.listen(process.env.PORT ?? 3000);
+  const port = configService.getOrThrow<number>('app.port');
+
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap().catch((error: unknown) => {
   console.error('Failed to start application', error);

@@ -2,7 +2,11 @@ export default () => ({
   app: {
     nodeEnv: process.env.NODE_ENV ?? 'development',
     port: Number(process.env.PORT ?? 3000),
-    corsOrigin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
+    corsOrigins: [
+      process.env.CORS_ORIGIN ?? 'http://localhost:5173',
+      process.env.CORS_ORIGIN_DEPLOY ??
+        'https://auth-task-eight-beige.vercel.app',
+    ],
   },
 
   database: {

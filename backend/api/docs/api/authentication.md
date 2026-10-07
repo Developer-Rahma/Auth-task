@@ -6,8 +6,10 @@ the global Nest `ValidationPipe` (`whitelist`, `forbidNonWhitelisted`, and
 they are not returned in response JSON.
 
 Browser requests use credentialed CORS for the configured `CORS_ORIGIN` and
-must send credentials for the browser to receive and attach cookies. The
-global throttler is configured for 100 requests per 60 seconds.
+the deployed Vercel frontend origin
+`https://auth-task-eight-beige.vercel.app`. They must send credentials for the
+browser to receive and attach cookies. The global throttler is configured for
+100 requests per 60 seconds.
 `CsrfMiddleware` exists in the codebase but is not registered, so these routes
 do not currently require an XSRF token or header.
 
