@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --color-space-950: #0b061b;
+  --color-space-900: #130a2b;
+  --color-space-800: #211044;
+  --color-nebula-700: #44216e;
+  --color-aurora-500: #24b7d3;
+  --color-aurora-300: #71d6e8;
+  --color-starlight: #f5f3fc;
+  --color-ink: #17152a;
+  --color-muted: #706d83;
+  --color-line: #e7e5ef;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #fbfaff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  scroll-behavior: smooth;
+
+  --color-space-950: #0b061b;
+  --color-space-900: #130a2b;
+  --color-space-800: #211044;
+  --color-nebula-700: #44216e;
+  --color-aurora-500: #24b7d3;
+  --color-aurora-300: #71d6e8;
+  --color-starlight: #f5f3fc;
+  --color-ink: #17152a;
+  --color-muted: #706d83;
+  --color-line: #e7e5ef;
+  --color-success: #167a59;
+  --color-danger: #bd354c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: var(--font-sans);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  color: white;
+  background: #472477;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-aurora-500);
+  outline-offset: 3px;
+}
+
+#root {
+  min-height: 100vh;
+}
