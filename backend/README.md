@@ -15,6 +15,7 @@ errors, logging, and tests. The complete active endpoint reference is in
 
 - [Technology](#technology)
 - [Run locally](#run-locally)
+- [Docker image](#docker-image)
 - [Configuration](#configuration)
 - [Architecture](#architecture)
 - [Authentication API](#authentication-api)
@@ -76,6 +77,23 @@ npm run format
 `start:dev` watches TypeScript changes. `start:prod` runs the compiled
 `dist/main` entrypoint and therefore expects a preceding build. The lint script
 uses ESLint with `--fix`, so review the working tree after running it.
+
+## Docker image
+
+The API uses a multi-stage production image defined in
+[`api/Dockerfile`](./api/Dockerfile). Build and run it from the repository root:
+
+```powershell
+cd backend/api
+Copy-Item .env.example .env
+docker build -t aster-auth-api .
+docker run --rm --env-file .env -p 3000:3000 aster-auth-api
+```
+
+Create `.env` from `.env.example` and provide the required MongoDB URI and JWT
+secrets before starting the container. The image contains the compiled API and
+production dependencies; environment-specific values are supplied at runtime
+and should not be baked into the image.
 
 ## Configuration
 
@@ -378,6 +396,10 @@ files under `backend/` change in a pull request or a push to `main`. It installs
 dependencies from the API lockfile, runs the unit and authentication e2e
 Jest suites, and builds the production application. E2E tests use the
 workflow's isolated MongoDB 7 service and the `auth_api_test` database.
+
+This workflow validates the Node.js application; it does not currently build
+or publish the Docker image. The Dockerfile packages the production API for
+container-based deployment.
 
 After CI passes on a push to `main`, a separate job triggers deployment to
 Render. Configure the Render Web Service with:
